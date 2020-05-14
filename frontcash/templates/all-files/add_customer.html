@@ -1,0 +1,97 @@
+{% extends 'all-files/base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MobiCash</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<style>
+.hr{ 
+  display: block;
+  margin-left:400px;
+  margin-right: 200px;
+  border-style: inset;
+  border-width: 1px;
+} 
+footer{
+  /* position: fixed; */
+  background-color:transparent;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color:rgb(8, 8, 8);
+  text-align: center;
+  font-size: 10px;
+}
+.page {
+  width: calc(100% - 17rem);
+  margin-left: 17rem;
+  transition: all 0.4s;
+}
+</style>
+<script>
+
+$(document).ready(function() {
+    var custo = {};
+    $('#Addcusto').click(function() {
+        custo.name = $('#name').val();
+        custo.nid = $('#nid').val();
+        custo.fone = $('#fone').val();
+        var custoJSON = JSON.stringify(custo);
+        $.ajax({
+        url: 'http://127.0.0.1:8000/api/adds/',
+        method: 'POST',
+        data: custoJSON,
+        dataType: "json",
+        contentType: "application/json",
+        success: function() {
+            alert('Saved successfully!');
+        },
+        error: function(error) {
+          alert(JSON.stringify(error));
+        }
+      })
+    })
+});
+</script>
+<body>
+  <div class="page">
+    <img src="/static/images/cover1.png" style="margin-left: 27px;">
+  </div>
+  <div class="card" style="box-shadow: 5px 5px 7px 7px #ff9a02;width: 45%;margin-left: 420px;margin-top: 20px;"><br>
+    <span><h3 class="text-center" style="font-family: 'Source Sans Pro', sans-serif;color: #ff9a02">Add a custo</h3></span>
+    <div class="card-body">
+        <form class="px-4 py-3">
+          <div class="form-group">   
+            <label for="exampleDropdownFormEmail1">Name</label>
+            <input id="name" type="text" class="form-control" placeholder="name" />
+          </div>
+          <div class="form-group">   
+            <label for="exampleDropdownFormEmail1">NID</label>
+            <input id="nid" type="text" class="form-control" placeholder="nid" />
+          </div>
+          <div class="form-group">
+            <label for="exampleDropdownFormEmail1">Phone</label>
+            <input id="fone" type="text" class="form-control" placeholder="fone" />
+          </div>
+          <button type="button" id="Addcusto" value="Add" class="btn btn-warning" style="background-color: #ff9a02">Add</button>
+        </form>
+            
+    </div>
+  </div><br><br>
+  <div>
+    <footer>
+      <hr class="hr">
+      <p style="margin-left:300px;">@2019 by ____Alexie.Manirakora</p>
+    </footer>
+  </div> 
+    
+</body>
+</html>
+{% endblock %}

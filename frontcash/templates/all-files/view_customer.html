@@ -1,0 +1,99 @@
+{% extends 'all-files/base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MobiCash</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<style>
+.hr{ 
+  display: block;
+  margin-left:400px;
+  margin-right: 200px;
+  border-style: inset;
+  border-width: 1px;
+} 
+footer{
+  position: fixed;
+  background-color:transparent;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color:rgb(8, 8, 8);
+  text-align: center;
+  font-size: 10px;
+}
+.page {
+  width: calc(100% - 17rem);
+  margin-left: 17rem;
+  transition: all 0.4s;
+}
+input{
+  width: 100px;
+  margin-left: 20px;
+}
+</style>
+<script>
+$(document).ready(function() {
+    $('#button').click(function() {
+        $.ajax({
+            url: 'https://jsonplaceholder.typicode.com/todos/' + $('#search').val(),
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                var body = $('#table tbody');
+                body.empty();
+                $(data).each(function(index, pro) {
+                    body.append('<tr>');
+                    body.append('<td>' + pro.userId + '</td>' + '<td>' + pro.id + '</td>' + '<td>' + pro.title + '</td>' + '<td>' + pro.completed + '</td>', '');
+                })
+            },
+            error: function(error) {
+                alert(JSON.stringify(error));
+            }
+        })
+    })
+});
+</script>
+<body>
+  <div class="page">
+    <img src="/static/images/cover1.png" style="margin-left: 27px;">
+  </div>
+<div class="card" style="box-shadow: 0px 0px 5px 0px #ff9a02;width: 50%;margin-left: 430px;margin-top: 20px;"><br>
+  <span><h3 class="text-center" style="font-family: 'Source Sans Pro', sans-serif;color: #ff9a02"> Search Product</h3></span>
+<br><input type="text" id="search" name="search" class="form-control" style="width: 300px;margin-left: 20px;">
+  <input type="submit" name="button" id="button" value="Search" class="btn btn-warning"><br><br>
+  <div class="card-body">
+      <table class="table" id="table">
+          <thead class="thead-default">
+            <tr>
+              <th scope="col" style="color: #ff9a02;">UserId</th>
+              <th scope="col" style="color: #ff9a02;">Id</th>
+              <th scope="col" style="color: #ff9a02;">Title</th>
+              <th scope="col" style="color: #ff9a02;">Completed</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+          </tbody>
+        </table>  
+  </div>
+</div>
+    <footer>
+      <hr class="hr">
+      <p style="margin-left:300px;">@2019 by ____Alexie.Manirakora</p>
+    </footer>
+  </div>   
+</body>
+</html>
+{% endblock %}
+
+ 
+
+ 

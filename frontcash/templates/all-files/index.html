@@ -1,0 +1,110 @@
+{% extends 'all-files/base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MobiCash</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<style>
+.hr{ 
+  display: block;
+  margin-left:400px;
+  margin-right: 200px;
+  border-style: inset;
+  border-width: 1px;
+} 
+footer{
+  position: fixed;
+  background-color:transparent;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color:rgb(8, 8, 8);
+  text-align: center;
+  font-size: 10px;
+}
+.page {
+  width: calc(100% - 17rem);
+  margin-left: 17rem;
+  transition: all 0.4s;
+}
+</style>
+
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: 'http://127.0.0.1:8000/api/lists/' ,
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            var body = $('#table tbody');
+            body.empty();
+            $(data).each(function(index, pro) {
+                body.append('<tr>');
+                body.append('<td id="name">' + pro.name + '</td>' + '<td id="nid">' + pro.nid + '</td>' + '<td id="fone">' + pro.fone + '</td>', '');
+            })
+        },
+        error: function(error) {
+            alert(JSON.stringify(error));
+        }
+    })
+}); 
+function generatepdf(){
+  var doc = new jsPDF()
+  var elementHTML = $('#table').html();
+  var Element = {'#tbody': function (element) {
+      return true;
+    }
+  };
+  doc.fromHTML(elementHTML, 35, 35, {
+      'width': 100,
+      'elementHandlers': Element
+  });
+  doc.save("myfile.pdf")
+} 
+    </script>
+<body>
+  <div class="page">
+    <img src="/static/images/cover1.png" style="margin-left: 27px;">
+  </div>
+  <div class="card" style="box-shadow: 0px 0px 5px 0px #ff9a02;width: 50%;margin-left: 365px;margin-top: 20px;"><br>
+    <span><h3 class="text-center" style="font-family: 'Source Sans Pro', sans-serif;color: #ff9a02">View Customer</h3></span>
+    <div class="card-body">
+      <br><button type="button" id="GetFile" onclick="generatepdf()" class="btn btn-warning" style="float:right;background-color: #ff9a02">Pdf File</button><br>
+        <br><table class="table" id="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col" style="color: #ff9a02;">Name</th>
+                <th scope="col" style="color: #ff9a02;">NID</th>
+                <th scope="col" style="color: #ff9a02;">Phone</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>  
+    </div>
+  </div><br><br><br><br><br><br><br><br><br>
+  <div>
+    <footer>
+      <hr class="hr">
+      <p style="margin-left:300px;">@2019 by ____Alexie.Manirakora</p>
+    </footer>
+  </div>   
+</body>
+</html>
+{% endblock %}
+
+ 
+
+ 
